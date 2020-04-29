@@ -34,7 +34,9 @@ for (route of routes) {
 }
 
 app.get("/", (req, res) => {
-    if (req.headers.referer) res.redirect(req.headers.referer);
+    if (req.headers.referer)
+        // When a Node app redirects to "/" from "/foo/bar/baz/", redirect to "/foo/"
+        res.redirect(req.headers.referer.split("/").slice(0, 4).join("/").concat("/"));
     else
         res.render("index", {
             routes,
