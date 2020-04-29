@@ -28,7 +28,7 @@ for (route of routes) {
             pathRewrite: (path, req) => {
                 return path.split("/").slice(2).join("/");
             },
-            logLevel: "debug",
+            logLevel: process.env.HPM_LOG_LEVEL,
         })
     );
 }
