@@ -42,7 +42,7 @@ app.get("/", (req, res) => {
         );
     else
         res.render("index", {
-            routes,
+            routes: routes.filter((route) => route.enabled),
             url: req.protocol + "://" + req.hostname,
         });
 });
