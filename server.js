@@ -21,22 +21,25 @@ app.use((req, res, next) => {
 app.set("view engine", "ejs");
 
 for (route of routes) {
-    app.use(
-        route.route,
-        createProxyMiddleware({
-            target: route.address,
-            pathRewrite: (path, req) => {
-                return path.split("/").slice(2).join("/");
-            },
-            logLevel: process.env.HPM_LOG_LEVEL,
-        })
-    );
+    route.enabled &&
+        app.use(
+            route.route,
+            createProxyMiddleware({
+                target: route.address,
+                pathRewrite: (path, req) => {
+                    return path.split("/").slice(2).join("/");
+                },
+                logLevel: process.env.HPM_LOG_LEVEL,
+            })
+        );
 }
 
 app.get("/", (req, res) => {
     if (req.headers.referer)
         // When a Node app redirects to "/" from "/foo/bar/baz/", redirect to "/foo/"
-        res.redirect(req.headers.referer.split("/").slice(0, 4).join("/").concat("/"));
+        res.redirect(
+            req.headers.referer.split("/").slice(0, 4).join("/").concat("/")
+        );
     else
         res.render("index", {
             routes,

@@ -3,12 +3,14 @@
         {
             "name": "My project 1",
             "route": "/myProject1",
-            "address": "http://localhost:3000"
+            "address": "http://localhost:3000",
+            "enabled": true
         },
         {
             "name": "My project 2",
             "route": "/myProject2",
-            "address": "http://localhost:3001"
+            "address": "http://localhost:3001",
+            "enabled": false
         }
     ]
 }
